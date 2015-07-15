@@ -3,6 +3,7 @@ require File.expand_path('../application', __FILE__)
 
 # Initialize the Rails application.
 Rails.application.initialize!
+=begin
 ActionMailer::Base.delivery_method = :smtp
 ActionMailer::Base.server_settings = {
     :address        => 'smtp.gmail.com',
@@ -12,3 +13,4 @@ ActionMailer::Base.server_settings = {
     :password       => 'kien@uit',
     :authentication => :plain
 }
+=end
