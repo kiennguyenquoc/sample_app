@@ -57,8 +57,8 @@ class User < ActiveRecord::Base
     reset_sent_at < 2.hours.ago
   end
 
-  def feed
-    User.find(id).microposts
+  def feeds
+    microposts
   end
 
   private
