@@ -8,7 +8,7 @@ class User < ActiveRecord::Base
     uniqueness: { case_sensitive: false }
   has_secure_password
   validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
-  validates :password, presence: true, length: { minimum: 6 }
+  #validates :password, presence: true, length: { minimum: 6 }
   validates :name, presence: true, length: { maximum: 50 }
 
   before_save   :downcase_email
@@ -33,15 +33,6 @@ class User < ActiveRecord::Base
   # Forgets a user.
   def forget
    update_attribute(:remember_digest, nil)
-  end
-
-  def downcase_email
-    self.email = email.downcase
-  end
-
-  def create_activation_digest
-    self.activation_token  = User.new_token
-    self.activation_digest = User.digest(activation_token)
   end
 
   # Activates an account.
@@ -71,6 +62,16 @@ class User < ActiveRecord::Base
     reset_sent_at < 2.hours.ago
   end
 
+  private
+  def downcase_email
+    self.email = email.downcase
+  end
+
+  def create_activation_digest
+    self.activation_token  = User.new_token
+    self.activation_digest = User.digest(activation_token)
+  end
+
   # Returns the hash digest of the given string.
   def self.digest(string)
     cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :
@@ -82,6 +83,4 @@ class User < ActiveRecord::Base
   def self.new_token
     SecureRandom.urlsafe_base64
   end
-
-
 end
