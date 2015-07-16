@@ -2,12 +2,11 @@ class Micropost < ActiveRecord::Base
 
   default_scope -> { order(created_at: :desc) }
   mount_uploader :picture, PictureUploader
+  belongs_to :user
 
   validates :user_id, presence: true
   validates :content, presence: true, length: { maximum: 140 }
   validate  :picture_size
-
-  belongs_to :user
 
   private
 
