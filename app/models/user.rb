@@ -31,7 +31,7 @@ class User < ActiveRecord::Base
   end
 
   def forget
-   update_attribute(:remember_digest, nil)
+    update_attribute(:remember_digest, nil)
   end
 
   def activate
@@ -39,7 +39,6 @@ class User < ActiveRecord::Base
     update_attribute(:activated_at, Time.zone.now)
   end
 
-  # Sends activation email
   def send_activation_email
     UserMailer.account_activation(self).deliver_now
   end
@@ -56,6 +55,10 @@ class User < ActiveRecord::Base
 
   def password_reset_expired?
     reset_sent_at < 2.hours.ago
+  end
+
+  def feed
+    Micropost.where("user_id = ?", id)
   end
 
   private
