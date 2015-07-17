@@ -1,7 +1,7 @@
 class RelationshipsController < ApplicationController
   before_action :logged_in_user
   before_action :find_user, only: [:create]
-  before_action :find_Relationship, only: [:destroy]
+  before_action :find_relationship, only: [:destroy]
 
   def create
     current_user.follow(@user)
@@ -25,7 +25,7 @@ class RelationshipsController < ApplicationController
     @user = User.find(params[:followed_id])
   end
 
-  def find_Relationship
+  def find_relationship
     @user = Relationship.find(params[:id]).followed
   end
 
